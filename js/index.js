@@ -1,7 +1,11 @@
 
-
 const grupoCart  = document.querySelector('.grupo-cart');
 const modalPokedex = document.querySelector('.modal-pokedex');
+const wraperPoke = document.querySelector('.wraper__pokemon');
+
+const boxLoading = document.querySelector('.box-loading');
+const soundOpen = document.getElementById('sound-open');
+const soundExit = document.getElementById('sound-exit');
 
 async function requestPoke() {
     
@@ -34,35 +38,41 @@ async function requestPoke() {
                 `;
 
                 let imgCart = document.querySelectorAll('.img__cart');
-                let wrapePoke = document.querySelector('.wraper__pokemon');
+               
 
                 // console.log('pokeNivel: ', pokeNivel);
 
                 imgCart.forEach( item => {
                     item.addEventListener('click', function() {
+                        soundOpen.play();
                         let srcImg = item.children[0].getAttribute('src');
                         let icone = item.parentNode.children[1].children[0];
                         icone = icone.getAttribute('class');
                         let nomePoke = item.parentNode.children[1].children[1].innerHTML;
-                        console.log(nomePoke);
+                        
+                        // console.log(nomePoke);
                         /* 
                             peguei img,nome e classe icone do cartão escolhido
                             agora e passar essas informações para um função assicrona
                             e pegar dados de nivel do pokemon e inserir no modal
                         */
-
+                        
                         nivelPoke(nomePoke, srcImg, icone);
-
+                        
                     });
                     
                 });
 
 
+                setTimeout(() => {
+                    boxLoading.style.display = "none";
+                }, 2000);
+
             });
 
         }
-    
-        console.log('poke: ',pokemons);
+
+        // console.log('poke: ',pokemons);
         
     });
 
@@ -77,7 +87,6 @@ async function nivelPoke(nomePokemon, img, icon) {
     await fetch('https://pokeapi.co/api/v2/pokemon/'+nomePokemon)
     .then(response => response.json())
     .then(data => {
-        let wraperPoke = document.querySelector('.wraper__pokemon');
         
         // console.log('ver nivel do pokemon: ',data.stats);
         
@@ -94,7 +103,7 @@ async function nivelPoke(nomePokemon, img, icon) {
             spcDefense: data.stats[4].base_stat,
             speed: data.stats[5].base_stat
         }
-
+        
         wraperPoke.innerHTML = `
         
             <div class="header__pokemon">
@@ -102,62 +111,79 @@ async function nivelPoke(nomePokemon, img, icon) {
                 <span>${nomePokemon}</span>
             </div><!--header__pokemon-->
 
-        <div class="img__pokemon">
-            <img src="${img}" alt="${nomePokemon}">  
-        </div><!--img__pokemon-->
+            <div class="img__pokemon">
+                <img src="${img}" alt="${nomePokemon}">  
+            </div><!--img__pokemon-->
 
-        <div class="box-btn-menu">
-            <div class="btn-event-menu">
-                <i class="fas fa-angle-down"></i>
-            </div><!--btn-event-menu-->
-        </div><!--box-btn-menu-->
+            <div class="box-btn-menu">
+                <div class="btn-event-menu">
+                    <i class="fas fa-angle-down"></i>
+                </div><!--btn-event-menu-->
+            </div><!--box-btn-menu-->
 
-        <div class="box-info-pokemon">
-            <div class="wraper__info-pokemon">
-                <h4>Estatística básica</h4>
-                <p>Hp: <b>${baseStat.hp}</b></p>
-                <p>Ataque: <b>${baseStat.attack}</b> </p>
-                <p>Defesa:  <b>${baseStat.defense}</b> </p>
-                <p>Ataque Especial: <b>${baseStat.spcAttack}</b> </p>
-                <p>Defesa Especial: <b>${baseStat.spcDefense}</b> </p>
-                <p>Rapidez: <b>${baseStat.speed}</b> </p>
-            </div><!--wraper__info-pokemon-->
-        </div><!--box-info-pokemon-->
+            <div class="box-info-pokemon">
+                <div class="wraper__info-pokemon">
+                    <h4>Estatística básica</h4>
+                    <p>Hp: <b>${baseStat.hp}</b></p>
+                    <p>Ataque: <b>${baseStat.attack}</b> </p>
+                    <p>Defesa:  <b>${baseStat.defense}</b> </p>
+                    <p>Ataque Especial: <b>${baseStat.spcAttack}</b> </p>
+                    <p>Defesa Especial: <b>${baseStat.spcDefense}</b> </p>
+                    <p>Rapidez: <b>${baseStat.speed}</b> </p>
+                </div><!--wraper__info-pokemon-->
+            </div><!--box-info-pokemon-->
         
         `;
 
+        showInfoPokemon();
         modalPokedex.style.display = 'block';
     });
 
 }
 
-
 /*
-    <div class="header__pokemon">
-                            <i class="far fa-heart"></i>
-                            <span>nome sadf sdf</span>
-                        </div><!--header__pokemon-->
-
-                        <div class="img__pokemon">
-                            <img src="https://i.pinimg.com/originals/f2/95/76/f295769d9bd3c34ffc552e837f5304ae.png" alt="">  
-                        </div><!--img__pokemon-->
-
-                        <div class="box-btn-menu">
-                            <div class="btn-event-menu">
-                                <i class="fas fa-angle-down"></i>
-                            </div><!--btn-event-menu-->
-                        </div><!--box-btn-menu-->
-
-                        <div class="box-info-pokemon">
-                            <div class="wraper__info-pokemon">
-                                <h4>Estatística básica</h4>
-                                <p>Hp: <b>00</b></p>
-                                <p>Ataque: <b>00</b> </p>
-                                <p>Defesa:  <b>00</b></p>
-                                <p>Ataque Especial: <b>00</b> </p>
-                                <p>Defesa Especial: <b>00</b> </p>
-                                <p>Rapidez: <b>00</b> </p>
-                            </div><!--wraper__info-pokemon-->
-                        </div><!--box-info-pokemon-->
-
+    Função para mostra informações do pokemon como hp - attack e outros
+    essa função ativa 'display = block' para mostrar e 'display = none' para esconder;
 */
+
+function showInfoPokemon() {
+    let btn = document.querySelector('.btn-event-menu');
+    let boxInfo = document.querySelector('.box-info-pokemon');
+
+    btn.addEventListener('click', function() {
+        let icon = btn.children[0];
+
+        if(icon.classList == 'fas fa-angle-down') {
+            icon.classList.remove('fa-angle-down');
+            icon.classList.add('fa-angle-up');
+            btn.style.lineHeight = 'calc(15px / 2 + 35px)';
+            boxInfo.style.display = 'block';
+
+        }else {
+            icon.classList.remove('fa-angle-up');
+            icon.classList.add('fa-angle-down');
+            btn.style.lineHeight = 'calc(18px / 2 + 35px)';
+            boxInfo.style.display = 'none';
+
+        }
+    });
+}
+
+/**
+ *  Função para fechar modal
+ */
+
+eventoFecharModal();
+function eventoFecharModal() {
+    let boxPoke = document.querySelector('.box-pokemon');
+
+    // evitar fechar quando click div
+    boxPoke.addEventListener('click',function(e) {e.stopPropagation();});
+
+    // evento de fachar quando clicar fora da div
+    modalPokedex.addEventListener('click', function() {
+        soundExit.play(); 
+        modalPokedex.style.display = 'none'; 
+    });
+    
+}
