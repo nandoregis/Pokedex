@@ -21,9 +21,9 @@
 <h3> Icones usados - do Fontawesome </h3>
 
 <ol>
-    <li><i class="far fa-heart"></i></li>
-    <li><i class="fas fa-angle-down"></i></li>
-    <li><i class="fas fa-angle-up"></i></li>
+    <li>"far fa-heart"</li>
+    <li>"fas fa-angle-down"</li>
+    <li>"fas fa-angle-up"</li>
 </ol>
 
 <h3> API  - PokéAPI </h3>
