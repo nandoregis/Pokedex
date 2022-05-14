@@ -34,31 +34,33 @@
 
 <p>
 {
-  "count": 1126,
-  "next": "https://pokeapi.co/api/v2/pokemon?offset=5&limit=5",
-  "previous": null,
-
+  "count": 1126,</br>
+  "next": "https://pokeapi.co/api/v2/pokemon?offset=5&limit=5",</br>
+  "previous": null,</br>
+  </br>
   "results": [
+    </br>
     {
       "name": "bulbasaur",
       "url": "https://pokeapi.co/api/v2/pokemon/1/"
-    },
+    },</br>
     {
       "name": "ivysaur",
       "url": "https://pokeapi.co/api/v2/pokemon/2/"
-    },
+    },</br>
     {
       "name": "venusaur",
       "url": "https://pokeapi.co/api/v2/pokemon/3/"
-    },
+    },</br>
     {
       "name": "charmander",
       "url": "https://pokeapi.co/api/v2/pokemon/4/"
-    },
+    },</br>
     {
       "name": "charmeleon",
       "url": "https://pokeapi.co/api/v2/pokemon/5/"
     }
+    </br>
   ]
 }
     
