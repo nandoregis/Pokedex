@@ -191,22 +191,26 @@ section.modal-pokedex {
 
 @media screen and (max-width: 690px) {
     
-    .box-pokemon {
-        width: 100%;
-    }
     
     .single-cart {
         width: 47%;
         margin: calc(3% / 2);
     }
+
+    @keyframes show-modal {
+        from {
+            width: 40%;
+        }
+    
+        to {
+            width: 100%;
+        }
+    }
  
 }
 
 @media screen and (max-width: 360px) {
-    
-    .box-pokemon {
-        width: 100%;
-    }
+
     
     .single-cart {
         width: 47%;
@@ -222,5 +226,15 @@ section.modal-pokedex {
     }
 
     .img__cart {min-height: auto;}
+
+    @keyframes show-modal {
+        from {
+            width: 40%;
+        }
+    
+        to {
+            width: 100%;
+        }
+    }
  
 }

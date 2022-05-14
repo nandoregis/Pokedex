@@ -44,7 +44,7 @@ async function requestPoke() {
 
                 imgCart.forEach( item => {
                     item.addEventListener('click', function() {
-                        soundOpen.play();
+                        // soundOpen.play();
                         let srcImg = item.children[0].getAttribute('src');
                         let icone = item.parentNode.children[1].children[0];
                         icone = icone.getAttribute('class');
@@ -182,7 +182,7 @@ function eventoFecharModal() {
 
     // evento de fachar quando clicar fora da div
     modalPokedex.addEventListener('click', function() {
-        soundExit.play(); 
+        // soundExit.play(); 
         modalPokedex.style.display = 'none'; 
     });
     
